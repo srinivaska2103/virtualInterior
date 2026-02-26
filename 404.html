@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" 
+    x-data="{ 
+        darkMode: localStorage.getItem('theme') === 'dark',
+        isRtl: localStorage.getItem('rtl') === 'true',
+        timer: 10
+    }" 
+    x-init="
+        $watch('darkMode', val => { document.documentElement.classList.toggle('dark', val); localStorage.setItem('theme', val ? 'dark' : 'light'); });
+        $watch('isRtl', val => { document.documentElement.dir = val ? 'rtl' : 'ltr'; localStorage.setItem('rtl', val); });
+        document.documentElement.classList.toggle('dark', darkMode);
+        document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+        
+        setInterval(() => { if(timer > 0) timer-- }, 1000);
+        setTimeout(() => window.location.href='index.html', 10000);
+    "
+    :class="{'dark': darkMode}"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/home.png">
+    <title>404 | Page Not Found</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { colors: { primary: '#6366f1' } } }
+        }
+    </script>
+    <style>
+        [x-cloak] { display: none !important; }
+        .floating { animation: float 6s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors duration-500 overflow-hidden">
+
+    <nav class="fixed top-0 w-full p-6 flex justify-between items-center z-50">
+        <!-- <a href="index.html" class="text-xl font-bold tracking-tighter uppercase">Vexa.</a> -->
+          <a href="/index.html">
+<div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200/50 dark:shadow-none transition-transform hover:rotate-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                </div>
+                <span class="font-black text-2xl tracking-tighter dark:text-white">VexaDesign</span>
+            </div>
+            </a>
+        <div class="flex items-center gap-3">
+            <button @click="isRtl = !isRtl" class="text-[10px] font-black border border-zinc-200 dark:border-zinc-800 px-3 py-1.5 rounded-xl uppercase hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+                <span x-text="isRtl ? 'LTR' : 'RTL'"></span>
+            </button>
+            <button @click="darkMode = !darkMode" class="p-2.5 bg-zinc-100 dark:bg-zinc-800 rounded-xl transition-all hover:scale-110">
+                <span x-show="!darkMode">🌙</span><span x-show="darkMode">☀️</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="min-h-screen flex flex-col items-center justify-center p-6 text-center">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/20 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="relative z-10">
+            <div class="floating mb-8">
+                <h1 class="text-[120px] md:text-[200px] font-black leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-zinc-900 to-zinc-400 dark:from-white dark:to-zinc-800">
+                    404
+                </h1>
+            </div>
+
+            <h2 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Lost in Space?</h2>
+            <p class="text-zinc-500 dark:text-zinc-400 text-lg mb-10 max-w-md mx-auto">
+                The page you're looking for has been moved, deleted, or never existed in our design studio.
+            </p>
+
+            <div class="space-y-6">
+                <a href="index.html" class="inline-flex items-center gap-3 px-10 py-4 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-2xl font-black text-lg shadow-2xl hover:scale-105 transition-all active:scale-95">
+                    <span>Back to Home</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                </a>
+                
+                <p class="text-xs text-zinc-400 font-medium">
+                    Auto-redirecting in <span class="text-primary font-bold" x-text="timer"></span> seconds...
+                </p>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 opacity-10 dark:opacity-5 pointer-events-none select-none">
+            <span class="text-[200px]">🛋️</span>
+        </div>
+    </main>
+
+</body>
+</html>

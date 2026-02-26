@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" 
+    x-data="{ 
+        isLogin: true, 
+        isForgot: false,
+        darkMode: localStorage.getItem('theme') === 'dark',
+        isRtl: localStorage.getItem('rtl') === 'true'
+    }" 
+    x-init="
+        $watch('darkMode', val => { document.documentElement.classList.toggle('dark', val); localStorage.setItem('theme', val ? 'dark' : 'light'); });
+        $watch('isRtl', val => { document.documentElement.dir = val ? 'rtl' : 'ltr'; localStorage.setItem('rtl', val); });
+        document.documentElement.classList.toggle('dark', darkMode);
+        document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+    "
+    :class="{'dark': darkMode}"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/home.png">
+    <title>VexaDesign | Authenticate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { colors: { primary: '#6366f1' } } }
+        }
+    </script>
+    <style>[x-cloak] { display: none !important; }</style>
+</head>
+<body class="bg-slate-50 dark:bg-gray-950 transition-colors duration-300">
+
+    <div class="fixed top-6 inset-x-0 z-50 pointer-events-none">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center pointer-events-auto">
+            <a href="index.html" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg group-hover:rotate-6 transition-transform">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                </div>
+                <span class="font-black text-xl dark:text-white">VexaDesign</span>
+            </a>
+
+            <div class="flex gap-2">
+                <button @click="isRtl = !isRtl" class="p-3 bg-white dark:bg-gray-900 rounded-xl shadow-sm border dark:border-gray-800 text-[10px] font-black uppercase dark:text-white">
+                    <span x-text="isRtl ? 'LTR' : 'RTL'"></span>
+                </button>
+                <button @click="darkMode = !darkMode" class="p-3 bg-white dark:bg-gray-900 rounded-xl shadow-sm border dark:border-gray-800 transition-all">
+                    <span x-show="!darkMode">🌙</span>
+                    <span x-show="darkMode">☀️</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <main class="min-h-screen flex items-center justify-center p-6 pt-24">
+        <div class="w-full max-w-[1100px] grid lg:grid-cols-2 bg-white dark:bg-gray-900 rounded-[3rem] shadow-2xl overflow-hidden border dark:border-gray-800">
+            
+            <div class="hidden lg:block relative bg-primary p-12 overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-primary to-indigo-900 opacity-80"></div>
+                <img src="assets/abthero1" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay">
+                
+                <div class="relative z-10 h-full flex flex-col justify-between text-white">
+                    <h2 class="text-4xl font-black leading-tight">Join the future of <br> Interior Design.</h2>
+                    <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20">
+                        <p class="italic text-lg mb-4">"The AI transformation tool changed how I view my home. Absolutely magical!"</p>
+                        <div class="flex items-center gap-3">
+                            <img src="assets/pradeep" class="w-10 h-10 rounded-full">
+                            <span class="font-bold">Pradeep Kumar</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-8 md:p-16">
+                
+                <div x-show="!isForgot">
+                    <h3 class="text-3xl font-black mb-2 dark:text-white" x-text="isLogin ? 'Welcome Back' : 'Create Account'"></h3>
+                    <p class="text-gray-500 mb-8" x-text="isLogin ? 'Enter your details to access your dashboard.' : 'Start your 7-day free trial today.'"></p>
+
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <button class="flex items-center justify-center gap-2 py-3 border-2 dark:border-gray-800 rounded-2xl font-bold text-sm hover:bg-gray-50 dark:hover:bg-gray-800 dark:text-white transition-all">
+                            <span>Google</span>
+                        </button>
+                        <button class="flex items-center justify-center gap-2 py-3 border-2 dark:border-gray-800 rounded-2xl font-bold text-sm hover:bg-gray-50 dark:hover:bg-gray-800 dark:text-white transition-all">
+                            <span>Apple</span>
+                        </button>
+                    </div>
+
+                    <div class="relative flex items-center mb-8">
+                        <div class="flex-grow border-t dark:border-gray-800"></div>
+                        <span class="px-4 text-xs font-bold text-gray-400 uppercase">Or use email</span>
+                        <div class="flex-grow border-t dark:border-gray-800"></div>
+                    </div>
+
+                    <form class="space-y-4">
+                        <template x-if="!isLogin">
+                            <div class="space-y-2">
+                                <label class="text-xs font-black uppercase tracking-widest text-gray-400 px-1">Full Name</label>
+                                <input type="text" class="w-full px-5 py-4 rounded-2xl bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary focus:outline-none dark:text-white transition-all">
+                            </div>
+                        </template>
+
+                        <div class="space-y-2">
+                            <label class="text-xs font-black uppercase tracking-widest text-gray-400 px-1">Email Address</label>
+                            <input type="email" required class="w-full px-5 py-4 rounded-2xl bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary focus:outline-none dark:text-white transition-all">
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center px-1">
+                                <label class="text-xs font-black uppercase tracking-widest text-gray-400">Password</label>
+                                <button type="button" @click="isForgot = true" x-show="isLogin" class="text-xs font-bold text-primary hover:underline">Forgot?</button>
+                            </div>
+                            <input type="password" required class="w-full px-5 py-4 rounded-2xl bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary focus:outline-none dark:text-white transition-all">
+                        </div>
+
+                        <button type="submit" class="w-full py-4 bg-primary text-white rounded-2xl font-black text-lg shadow-xl shadow-indigo-200 dark:shadow-none hover:bg-indigo-700 transition-all">
+                            <span x-text="isLogin ? 'Login Now' : 'Sign Up Free'"></span>
+                        </button>
+                    </form>
+
+                    <p class="mt-8 text-center text-sm text-gray-500">
+                        <span x-text="isLogin ? 'New to Vexa?' : 'Already have an account?'"></span>
+                        <button @click="isLogin = !isLogin" class="text-primary font-bold hover:underline" x-text="isLogin ? 'Create an account' : 'Log in instead'"></button>
+                    </p>
+                </div>
+
+                <div x-show="isForgot" x-cloak>
+                    <button @click="isForgot = false" class="mb-6 text-sm font-bold text-gray-400 hover:text-primary flex items-center gap-2">
+                        ← Back to Login
+                    </button>
+                    <h3 class="text-3xl font-black mb-2 dark:text-white">Reset Password</h3>
+                    <p class="text-gray-500 mb-8">We'll send a magic link to your email to reset your password.</p>
+                    
+                    <form class="space-y-6">
+                        <div class="space-y-2">
+                            <label class="text-xs font-black uppercase tracking-widest text-gray-400 px-1">Your Email</label>
+                            <input type="email" required class="w-full px-5 py-4 rounded-2xl bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary focus:outline-none dark:text-white">
+                        </div>
+                        <button class="w-full py-4 bg-primary text-white rounded-2xl font-black text-lg">Send Reset Link</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

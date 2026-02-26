@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ darkMode: false, isRtl: false, mobileMenu: false }" :class="{'dark': darkMode}" :dir="isRtl ? 'rtl' : 'ltr'">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/home.png">
+    <title>VexaDesign | AI Virtual Interior Service</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        [x-cloak] { display: none !important; }
+        .transition-all { transition: all 0.3s ease; }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-all">
+
+ <nav 
+    x-data="{ 
+        mobileMenu: false, 
+        userDropdown: false,
+        isRtl: localStorage.getItem('rtl') === 'true',
+        darkMode: localStorage.getItem('theme') === 'dark',
+        activePage: 'home',
+        
+        toggleTheme() {
+            this.darkMode = !this.darkMode;
+            localStorage.setItem('theme', this.darkMode ? 'dark' : 'light');
+        },
+        toggleRtl() {
+            this.isRtl = !this.isRtl;
+            localStorage.setItem('rtl', this.isRtl);
+        }
+    }" 
+    x-init="
+        $watch('darkMode', val => document.documentElement.classList.toggle('dark', val));
+        $watch('isRtl', val => document.documentElement.dir = val ? 'rtl' : 'ltr');
+        document.documentElement.classList.toggle('dark', darkMode);
+        document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+    "
+    class="sticky top-0 z-[100] bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800"
+>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-20 items-center">
+            <a href="index.html">
+<div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200/50 dark:shadow-none transition-transform hover:rotate-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                </div>
+                <span class="font-black text-2xl tracking-tighter dark:text-white">VexaDesign</span>
+            </div>
+            </a>
+            
+<div class="hidden lg:flex items-center space-x-1">
+    <template x-for="link in [
+        {id: 'index', label: 'Home'},
+        {id: 'home2', label: 'Home 2'},
+        {id: 'about', label: 'About Us'},
+        {id: 'features', label: 'Features'},
+        {id: 'pricing', label: 'Pricing'},
+        {id: 'contact', label: 'Contact'}
+    ]">
+        <a 
+            :href="link.id + '.html'" 
+            :class="(activePage === link.id || window.location.pathname.includes(link.id)) 
+                    ? 'text-primary bg-indigo-50 dark:bg-indigo-900/30' 
+                    : 'text-gray-600 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800'"
+            class="px-4 py-2 rounded-xl text-sm font-bold transition-all"
+            x-text="link.label"
+        ></a>
+    </template>
+</div>
+
+            <div class="flex items-center gap-2 md:gap-3">
+                
+                <div class="hidden sm:flex items-center gap-2 mr-2">
+                    <button @click="toggleRtl()" class="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-[10px] font-black uppercase hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <span x-text="isRtl ? 'LTR' : 'RTL'"></span>
+                    </button>
+
+                    <button @click="toggleTheme()" class="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
+                        <template x-if="!darkMode">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                        </template>
+                        <template x-if="darkMode">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 5.657l-.707-.707" /></svg>
+                        </template>
+                    </button>
+                </div>
+
+                <a href="login.html" class="hidden md:flex px-5 py-2.5 bg-primary text-white text-sm font-bold rounded-xl shadow-lg shadow-indigo-200 dark:shadow-none hover:bg-indigo-700 transition-all">
+                    Register
+                </a>
+
+                <div class="relative" @click.away="userDropdown = false">
+                    <button @click="userDropdown = !userDropdown" class="flex items-center gap-2 p-1 md:p-1.5 rounded-full bg-gray-50 dark:bg-gray-800 border dark:border-gray-700 hover:border-primary transition-all">
+                        <img src="assets/pradeep" class="w-8 h-8 rounded-full">
+                        <svg class="w-4 h-4 text-gray-400 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+
+                    <div 
+                        x-show="userDropdown" 
+                        x-transition:enter="transition ease-out duration-100"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        class="absolute right-0 mt-3 w-56 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border dark:border-gray-700 py-2 z-50"
+                        x-cloak
+                    >
+                       
+                        <a href="user.html" class="block px-4 py-2 text-sm hover:bg-primary hover:text-white transition-colors">User Dashboard</a>
+                        <!-- <a href="#" class="block px-4 py-2 text-sm hover:bg-primary hover:text-white transition-colors">Account Settings</a> -->
+                        <!-- <hr class="my-2 border-gray-100 dark:border-gray-700"> -->
+                        <!-- <a href="#" class="block px-4 py-2 text-sm text-red-500 font-bold hover:bg-red-50">Log Out</a> -->
+                    </div>
+                </div>
+
+                <button @click="mobileMenu = !mobileMenu" class="lg:hidden p-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border dark:border-gray-700">
+                    <svg x-show="!mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <svg x-show="mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+   <div 
+    x-show="mobileMenu" 
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0 -translate-y-10"
+    x-transition:enter-end="opacity-100 translate-y-0"
+    class="lg:hidden fixed inset-x-0 top-20 bg-white dark:bg-gray-900 border-b dark:border-gray-800 p-6 z-40 shadow-2xl space-y-6"
+    x-cloak
+>
+    <div class="grid grid-cols-2 gap-3">
+        <template x-for="link in [
+            {id: 'index', label: 'Home'},
+            {id: 'home2', label: 'Home2'},
+            {id: 'about', label: 'About Us'},
+            {id: 'features', label: 'Features'},
+            {id: 'pricing', label: 'Pricing'},
+            {id: 'contact', label: 'Contact'}
+        ]">
+            <a 
+                :href="'' + link.id + '.html'" 
+                class="flex items-center justify-center p-4 rounded-2xl font-bold text-sm transition-all"
+                :class="window.location.pathname.includes(link.id) || (link.id === 'index' && window.location.pathname === '/')
+                        ? 'bg-primary text-white shadow-lg shadow-indigo-200 dark:shadow-none' 
+                        : 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-primary'"
+                x-text="link.label"
+            ></a>
+        </template>
+    </div>
+
+    <div class="flex flex-col gap-3">
+        <a href="login.html" 
+           class="w-full py-4 text-center rounded-2xl font-black shadow-xl text-lg transition-all"
+           :class="window.location.pathname.includes('login') 
+                   ? 'bg-indigo-800 text-white' 
+                   : 'bg-primary text-white hover:bg-indigo-700'">
+            Register Now
+        </a>
+        
+        <button @click="toggleTheme()" class="w-full py-4 border-2 border-gray-100 dark:border-gray-700 rounded-2xl font-bold flex justify-between px-6 items-center hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <span class="text-gray-500 dark:text-gray-400">Appearance</span>
+            <span x-text="darkMode ? 'Dark Mode 🌙' : 'Light Mode ☀️'" class="text-primary"></span>
+        </button>
+
+        <button @click="toggleRtl()" class="w-full py-4 border-2 border-gray-100 dark:border-gray-700 rounded-2xl font-bold flex justify-between px-6 items-center hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+            <span class="text-gray-500 dark:text-gray-400">Layout Direction</span>
+            <span x-text="isRtl ? 'RTL' : 'LTR'" class="text-primary"></span>
+        </button>
+    </div>
+</div>
+</nav>
+
+<style>
+    [x-cloak] { display: none !important; }
+</style>
+<header class="relative py-12 md:py-20 lg:py-28 overflow-hidden bg-white dark:bg-gray-900" x-data="{ hover: false }">
+    <div class="absolute top-0 right-0 -translate-y-12 translate-x-12 blur-3xl opacity-20 pointer-events-none">
+        <div class="aspect-square w-96 bg-primary rounded-full"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+            
+            <div class="text-center lg:text-left order-2 lg:order-1">
+                <span class="inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-xs md:text-sm font-bold tracking-wider text-primary uppercase bg-indigo-50 dark:bg-indigo-900/30 rounded-full">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                    </span>
+                    AI-Powered Interior Design
+                </span>
+                
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1] mb-6 tracking-tight">
+                    Design Your Dream Space <br class="hidden md:block">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">Without</span> the Designer Price
+                </h1>
+                
+                <p class="text-base md:text-lg text-gray-600 dark:text-gray-400 mb-10 max-w-xl mx-auto lg:mx-0">
+                    Upload a photo of any room and watch our AI transform it into a professional masterpiece with matching shopping lists in seconds.
+                </p>
+                
+              <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 w-full max-w-md mx-auto lg:mx-0">
+    
+    <a href="login.html" class="w-full sm:w-auto">
+        <button class="group w-full px-8 py-4 bg-primary text-white rounded-2xl font-bold shadow-xl shadow-indigo-200 dark:shadow-none hover:bg-indigo-700 transition-all flex items-center justify-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+            </svg>
+            <span>Upload Your Room</span>
+        </button>
+    </a>
+
+    <a href="comingsoon.html" class="w-full sm:w-auto">
+        <button class="w-full px-8 py-4 bg-white dark:bg-zinc-800 border-2 border-zinc-100 dark:border-zinc-700 rounded-2xl font-bold hover:border-primary dark:hover:border-primary dark:text-white transition-all">
+            Try Free Demo
+        </button>
+    </a>
+
+</div>
+
+                <div class="mt-8 flex items-center justify-center lg:justify-start gap-4 text-sm text-gray-500">
+                    <div class="flex -space-x-2">
+                        <img class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-900" src="assets/indexherot1" alt="user">
+                        <img class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-900" src="assets/indexherot2" alt="user">
+                        <img class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-900" src="assets/indexherot3" alt="user">
+                    </div>
+                    <span>Join <strong>2,400+</strong> happy homeowners</span>
+                </div>
+            </div>
+
+            <div class="relative order-1 lg:order-2 group" @mouseenter="hover = true" @mouseleave="hover = false">
+                <div class="absolute -inset-4 bg-gradient-to-r from-primary to-purple-600 rounded-3xl blur-2xl opacity-10 group-hover:opacity-20 transition duration-1000"></div>
+                
+                <div class="relative bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden aspect-[4/3] md:aspect-video lg:aspect-[4/3]">
+                    
+                    <img src="assets/indexheroimg1" 
+                         class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+                         :class="hover ? 'opacity-0' : 'opacity-100'">
+                    
+                    <img src="assets/indexheroimg2" 
+                         class="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+                         :class="hover ? 'opacity-100' : 'opacity-0'">
+
+                    <div class="absolute top-4 left-4 bg-black/50 backdrop-blur-md text-white px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-widest">
+                        <span x-text="hover ? 'AI RENDER' : 'BEFORE'"></span>
+                    </div>
+
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none" x-show="!hover">
+                        <div class="bg-white/90 dark:bg-gray-900/90 p-4 rounded-2xl shadow-2xl flex items-center gap-3 animate-bounce">
+                            <span class="text-2xl">✨</span>
+                            <p class="text-sm font-bold">Hover to see Magic</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex absolute -bottom-6 -left-6 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-xl border dark:border-gray-700 items-center gap-4 animate-float">
+                    <div class="bg-green-100 dark:bg-green-900/30 p-2 rounded-xl">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase font-bold">Design Accuracy</p>
+                        <p class="text-lg font-black text-gray-800 dark:text-white">99.2% Perfect</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+<style>
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    .animate-float {
+        animation: float 4s ease-in-out infinite;
+    }
+</style>
+
+   <section 
+    class="py-12 bg-gray-50 dark:bg-gray-800/30 border-y border-gray-100 dark:border-gray-800 overflow-hidden"
+    x-data="{ 
+        users: 0, 
+        target: 10240,
+        init() {
+            let interval = setInterval(() => {
+                if (this.users < this.target) {
+                    this.users += Math.floor(Math.random() * 200) + 50;
+                    if (this.users >= this.target) {
+                        this.users = this.target;
+                        clearInterval(interval);
+                    }
+                }
+            }, 30);
+        }
+    }"
+>
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+            
+            <div class="flex flex-wrap justify-center md:justify-start gap-8 lg:gap-16">
+                <div class="text-center md:text-left group cursor-default">
+                    <p class="text-3xl md:text-4xl font-black text-primary dark:text-indigo-400 tabular-nums">
+                        <span x-text="users.toLocaleString()">0</span>+
+                    </p>
+                    <p class="text-sm font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 group-hover:text-primary transition-colors">
+                        Rooms Designed
+                    </p>
+                </div>
+
+                <div class="text-center md:text-left group cursor-pointer">
+                    <div class="flex items-center justify-center md:justify-start gap-1 mb-1">
+                        <template x-for="i in 5">
+                            <svg class="w-5 h-5 text-yellow-400 fill-current group-hover:scale-125 transition-transform" :style="'transition-delay: ' + (i * 50) + 'ms'" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                        </template>
+                    </div>
+                    <p class="text-sm font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">
+                        4.8/5 Customer Rating
+                    </p>
+                </div>
+            </div>
+
+            <div class="relative w-full md:w-1/2 overflow-hidden">
+                <div class="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-gray-50 dark:from-gray-900 z-10"></div>
+                <div class="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-gray-50 dark:from-gray-900 z-10"></div>
+                
+                <div class="flex animate-marquee whitespace-nowrap items-center gap-12 opacity-50 dark:opacity-30 hover:opacity-100 transition-opacity duration-500">
+                    <span class="text-2xl font-black italic tracking-tighter">IKEA</span>
+                    <span class="text-2xl font-black italic tracking-tighter">WEST ELM</span>
+                    <span class="text-2xl font-black italic tracking-tighter">WAYFAIR</span>
+                    <span class="text-2xl font-black italic tracking-tighter">POTTERY BARN</span>
+                    <span class="text-2xl font-black italic tracking-tighter">H&M HOME</span>
+                    <span class="text-2xl font-black italic tracking-tighter">IKEA</span>
+                    <span class="text-2xl font-black italic tracking-tighter">WEST ELM</span>
+                    <span class="text-2xl font-black italic tracking-tighter">WAYFAIR</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
+        animation: marquee 20s linear infinite;
+    }
+    .animate-marquee:hover {
+        animation-play-state: paused;
+    }
+</style>
+
+  <section class="py-24 bg-white dark:bg-gray-900 overflow-hidden" x-data="{ activeStep: 1 }">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-20">
+            <h2 class="text-3xl md:text-5xl font-black mb-4">Simple 4-Step Transformation</h2>
+            <p class="text-gray-500 dark:text-gray-400">From a messy room to a designer masterpiece in minutes.</p>
+        </div>
+
+        <div class="relative">
+            <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-gray-100 dark:bg-gray-800 -translate-y-1/2 z-0">
+                <div class="h-full bg-primary transition-all duration-1000" :style="'width: ' + ((activeStep - 1) * 33.33) + '%'"></div>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8 relative z-10">
+                
+                <div 
+                    @mouseenter="activeStep = 1"
+                    class="group relative p-8 rounded-3xl bg-white dark:bg-gray-800 border-2 transition-all duration-500 cursor-pointer overflow-hidden"
+                    :class="activeStep === 1 ? 'border-primary shadow-2xl -translate-y-4' : 'border-transparent shadow-sm'"
+                >
+                    <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500">
+                        <!-- <img src="https://images.unsplash.com/photo-1522204538344-922f76eba0a9?auto=format&fit=crop&q=60&w=400" class="w-full h-full object-cover"> -->
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-900/50 text-primary flex items-center justify-center text-2xl font-bold mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                            1
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">Upload Room</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                            Snap a photo of your current space using your phone or upload an existing layout.
+                        </p>
+                    </div>
+                </div>
+
+                <div 
+                    @mouseenter="activeStep = 2"
+                    class="group relative p-8 rounded-3xl bg-white dark:bg-gray-800 border-2 transition-all duration-500 cursor-pointer overflow-hidden"
+                    :class="activeStep === 2 ? 'border-primary shadow-2xl -translate-y-4' : 'border-transparent shadow-sm'"
+                >
+                    <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500">
+                        <!-- <img src="https://images.unsplash.com/photo-1507149833265-60c372daea22?auto=format&fit=crop&q=60&w=400" class="w-full h-full object-cover"> -->
+                    </div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-900/50 text-primary flex items-center justify-center text-2xl font-bold mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                            2
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">Set Preferences</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                            Tell our AI your style (Boho, Modern, etc.) and your furniture budget.
+                        </p>
+                    </div>
+                </div>
+
+                <div 
+                    @mouseenter="activeStep = 3"
+                    class="group relative p-8 rounded-3xl bg-white dark:bg-gray-800 border-2 transition-all duration-500 cursor-pointer overflow-hidden"
+                    :class="activeStep === 3 ? 'border-primary shadow-2xl -translate-y-4' : 'border-transparent shadow-sm'"
+                >
+                    <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500">
+                        <!-- <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=60&w=400" class="w-full h-full object-cover"> -->
+                    </div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-900/50 text-primary flex items-center justify-center text-2xl font-bold mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                            3
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">AI Concept</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                            Receive photorealistic 3D renders and a bird's eye view of your new layout.
+                        </p>
+                    </div>
+                </div>
+
+                <div 
+                    @mouseenter="activeStep = 4"
+                    class="group relative p-8 rounded-3xl bg-white dark:bg-gray-800 border-2 transition-all duration-500 cursor-pointer overflow-hidden"
+                    :class="activeStep === 4 ? 'border-primary shadow-2xl -translate-y-4' : 'border-transparent shadow-sm'"
+                >
+                    <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500">
+                        <!-- <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=60&w=400" class="w-full h-full object-cover"> -->
+                    </div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-900/50 text-primary flex items-center justify-center text-2xl font-bold mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                            4
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">Shop the Look</h3>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                            Click on any item in your design to buy it directly from our partner stores.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-24 bg-gray-50 dark:bg-gray-900 overflow-hidden" 
+    x-data="{
+        roomType: 'living',
+        sliderPos: 50,
+        rooms: {
+            living: {
+                before: 'assets/indeximg1',
+                after: 'assets/indeximg2',
+                label: 'Modern Minimalist Living'
+            },
+            bedroom: {
+                before: 'assets/indeximg1',
+                after: 'assets/diff1',
+                label: 'Scandinavian Master Suite'
+            },
+            office: {
+                before: 'assets/indeximg1',
+                after: 'assets/goffice',
+                label: 'Industrial Home Office'
+            }
+        }
+    }">
+    
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-black mb-6 dark:text-white">Real Results, Real Magic</h2>
+            <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+                Drag the slider to see how our AI turns empty shells into designer masterpieces.
+            </p>
+        </div>
+
+        <div class="flex justify-center flex-wrap gap-2 mb-12">
+            <template x-for="(data, key) in rooms" :key="key">
+                <button 
+                    @click="roomType = key" 
+                    class="px-6 py-2 rounded-full font-bold text-sm transition-all border-2"
+                    :class="roomType === key ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-500/30' : 'bg-white dark:bg-gray-800 border-transparent text-gray-500 hover:border-gray-200'"
+                    x-text="key.charAt(0).toUpperCase() + key.slice(1)"
+                ></button>
+            </template>
+        </div>
+
+        <div class="relative max-w-5xl mx-auto aspect-video rounded-[2rem] overflow-hidden shadow-2xl border-4 md:border-8 border-white dark:border-gray-800 bg-gray-200 dark:bg-gray-800">
+            
+            <img :src="rooms[roomType].after" class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none">
+            
+            <div class="absolute inset-0 overflow-hidden select-none pointer-events-none z-10" :style="`width: ${sliderPos}%` ">
+                <img :src="rooms[roomType].before" class="absolute inset-0 w-[1024px] h-full object-cover max-w-none">
+            </div>
+
+            <div class="absolute inset-x-0 bottom-6 flex justify-between px-8 pointer-events-none z-30">
+                <span class="bg-black/50 backdrop-blur-md text-white px-4 py-1.5 rounded-lg text-[10px] font-black tracking-widest uppercase">Before</span>
+                <span class="bg-indigo-600 text-white px-4 py-1.5 rounded-lg text-[10px] font-black tracking-widest uppercase">AI After</span>
+            </div>
+
+            <div class="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize group z-30" :style="`left: ${sliderPos}%` ">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white dark:bg-gray-800 rounded-full shadow-2xl flex items-center justify-center border-4 border-indigo-600 group-hover:scale-110 transition-transform">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-6 md:h-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M8 7l-4 4m0 0l4 4m-4-4h16m0 0l-4-4m4 4l-4 4" />
+                    </svg>
+                </div>
+            </div>
+
+            <input 
+                type="range" 
+                min="0" 
+                max="100" 
+                x-model="sliderPos" 
+                class="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-40"
+            >
+        </div>
+
+        <div class="mt-12 text-center dark:text-white">
+            <h4 class="text-2xl font-bold mb-2" x-text="rooms[roomType].label"></h4>
+            <div class="flex items-center justify-center gap-6 text-sm text-gray-500 dark:text-gray-400">
+                <span class="flex items-center gap-2">⏱ AI Process: 14s</span>
+                <span class="flex items-center gap-2">💰 Est. Furniture: $2,450</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Styling for the range input to ensure cross-browser compatibility */
+    input[type="range"]::-webkit-slider-thumb {
+        width: 40px;
+        height: 100vh;
+        -webkit-appearance: none;
+    }
+</style>
+
+<section class="py-24 bg-slate-50 dark:bg-gray-900" x-data="{ activeFilter: 'all' }">
+    <div class="max-w-7xl mx-auto px-4">
+        
+        <div class="flex flex-col lg:flex-row justify-between items-center lg:items-end gap-8 mb-16">
+            <div class="text-center lg:text-left">
+                <h2 class="text-3xl md:text-5xl font-black mb-4">Inspiration Gallery</h2>
+                <p class="text-gray-500 dark:text-gray-400">Discover AI-generated masterpieces for every corner of your home.</p>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-2 p-1 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border dark:border-gray-700">
+                <button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'bg-primary text-white' : 'text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700'" class="px-5 py-2 rounded-xl text-sm font-bold transition-all">All</button>
+                <button @click="activeFilter = 'living'" :class="activeFilter === 'living' ? 'bg-primary text-white' : 'text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700'" class="px-5 py-2 rounded-xl text-sm font-bold transition-all">Living Room</button>
+                <button @click="activeFilter = 'bedroom'" :class="activeFilter === 'bedroom' ? 'bg-primary text-white' : 'text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700'" class="px-5 py-2 rounded-xl text-sm font-bold transition-all">Bedroom</button>
+                <button @click="activeFilter = 'office'" :class="activeFilter === 'office' ? 'bg-primary text-white' : 'text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700'" class="px-5 py-2 rounded-xl text-sm font-bold transition-all">Office</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            
+            <div x-show="activeFilter === 'all' || activeFilter === 'living'" 
+                 x-transition:enter="transition ease-out duration-500"
+                 x-transition:enter-start="opacity-0 scale-90"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 class="group relative overflow-hidden rounded-3xl bg-gray-200 aspect-[3/4] cursor-pointer">
+                <img src="assets/indexgimg1" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
+                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Modern Minimalist</span>
+                    <h4 class="text-white font-bold text-2xl mb-4">Zen Living Space</h4>
+                    <button class="w-full bg-white text-black py-3 rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition-colors">Start With This Style</button>
+                </div>
+            </div>
+
+            <div x-show="activeFilter === 'all' || activeFilter === 'bedroom'" 
+                 x-transition:enter="transition ease-out duration-500"
+                 class="group relative overflow-hidden rounded-3xl bg-gray-200 aspect-[3/4] cursor-pointer">
+                <img src="assets/indexgimg2" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
+                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Scandinavian</span>
+                    <h4 class="text-white font-bold text-2xl mb-4">Nordic Retreat</h4>
+                    <button class="w-full bg-white text-black py-3 rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition-colors">Start With This Style</button>
+                </div>
+            </div>
+
+            <div x-show="activeFilter === 'all' || activeFilter === 'office'" 
+                 x-transition:enter="transition ease-out duration-500"
+                 class="group relative overflow-hidden rounded-3xl bg-gray-200 aspect-[3/4] cursor-pointer">
+                <img src="assets/indexgimg3" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
+                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Industrial</span>
+                    <h4 class="text-white font-bold text-2xl mb-4">Loft Workspace</h4>
+                    <button class="w-full bg-white text-black py-3 rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition-colors">Start With This Style</button>
+                </div>
+            </div>
+
+            <div x-show="activeFilter === 'all' || activeFilter === 'living'" 
+                 x-transition:enter="transition ease-out duration-500"
+                 class="group relative overflow-hidden rounded-3xl bg-gray-200 aspect-[3/4] cursor-pointer">
+                <img src="assets/indexgimg4" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
+                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Boho Chic</span>
+                    <h4 class="text-white font-bold text-2xl mb-4">Eclectic Comfort</h4>
+                    <button class="w-full bg-white text-black py-3 rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition-colors">Start With This Style</button>
+                </div>
+            </div>
+
+            <div x-show="activeFilter === 'all' || activeFilter === 'bedroom'" 
+                 x-transition:enter="transition ease-out duration-500"
+                 class="group relative overflow-hidden rounded-3xl bg-gray-200 aspect-[3/4] cursor-pointer lg:hidden xl:block">
+                <img src="assets/indexgimg5" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
+                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Japandi</span>
+                    <h4 class="text-white font-bold text-2xl mb-4">Serene Sleep</h4>
+                    <button class="w-full bg-white text-black py-3 rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition-colors">Start With This Style</button>
+                </div>
+            </div>
+
+            <div x-show="activeFilter === 'all' || activeFilter === 'office'" 
+                 x-transition:enter="transition ease-out duration-500"
+                 class="group relative overflow-hidden rounded-3xl bg-gray-200 aspect-[3/4] cursor-pointer lg:hidden xl:block">
+                <img src="assets/indexgimg6" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
+                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Luxury Modern</span>
+                    <h4 class="text-white font-bold text-2xl mb-4">Executive Suite</h4>
+                    <button class="w-full bg-white text-black py-3 rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition-colors">Start With This Style</button>
+                </div>
+            </div>
+             <div x-show="activeFilter === 'all' || activeFilter === 'living'" 
+                 x-transition:enter="transition ease-out duration-500"
+                 x-transition:enter-start="opacity-0 scale-90"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 class="group relative overflow-hidden rounded-3xl bg-gray-200 aspect-[3/4] cursor-pointer">
+                <img src="assets/indexgimg1" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
+                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Modern Minimalist</span>
+                    <h4 class="text-white font-bold text-2xl mb-4">Zen Living Space</h4>
+                    <button class="w-full bg-white text-black py-3 rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition-colors">Start With This Style</button>
+                </div>
+            </div>
+
+            <div x-show="activeFilter === 'all' || activeFilter === 'bedroom'" 
+                 x-transition:enter="transition ease-out duration-500"
+                 class="group relative overflow-hidden rounded-3xl bg-gray-200 aspect-[3/4] cursor-pointer">
+                <img src="assets/indexgimg2" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
+                    <span class="text-primary text-xs font-bold uppercase tracking-widest mb-2">Scandinavian</span>
+                    <h4 class="text-white font-bold text-2xl mb-4">Nordic Retreat</h4>
+                    <button class="w-full bg-white text-black py-3 rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition-colors">Start With This Style</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center md:hidden">
+            <button class="w-full bg-gray-100 dark:bg-gray-800 py-4 rounded-2xl font-bold">View All 500+ Styles</button>
+        </div>
+    </div>
+</section>
+
+<section class="py-24 bg-white dark:bg-gray-900" x-data="{ annual: false }">
+    <div class="max-w-7xl mx-auto px-4">
+        
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-black mb-6">Simple, Transparent Pricing</h2>
+            <p class="text-gray-500 dark:text-gray-400 mb-10">Choose the plan that fits your vision.</p>
+            
+            <div class="flex items-center justify-center gap-4">
+                <span class="text-sm font-bold" :class="!annual ? 'text-primary' : 'text-gray-400'">Monthly</span>
+                <button 
+                    @click="annual = !annual" 
+                    class="relative w-14 h-7 bg-gray-200 dark:bg-gray-700 rounded-full transition-colors duration-300 focus:outline-none"
+                    :class="annual ? 'bg-primary' : ''"
+                >
+                    <div 
+                        class="absolute top-1 left-1 w-5 h-5 bg-white rounded-full transition-transform duration-300 shadow-sm"
+                        :class="annual ? 'translate-x-7' : 'translate-x-0'"
+                    ></div>
+                </button>
+                <span class="text-sm font-bold" :class="annual ? 'text-primary' : 'text-gray-400'">
+                    Yearly <span class="ml-1 text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded-full">Save 20%</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center max-w-6xl mx-auto">
+            
+            <div class="group p-8 rounded-3xl bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 hover:border-primary transition-all duration-300 hover:shadow-2xl">
+                <h3 class="font-bold text-xl mb-2">Basic</h3>
+                <p class="text-sm text-gray-500 mb-6">For hobbyists exploring AI.</p>
+                <div class="flex items-baseline gap-1 mb-8">
+                    <span class="text-4xl font-black">$0</span>
+                    <span class="text-gray-500">/mo</span>
+                </div>
+                <ul class="space-y-4 mb-10">
+                    <li class="flex items-center gap-3 text-sm">
+                        <span class="text-primary">✔</span> 3 Room Renders
+                    </li>
+                    <li class="flex items-center gap-3 text-sm">
+                        <span class="text-primary">✔</span> Standard Styles
+                    </li>
+                    <li class="flex items-center gap-3 text-sm opacity-40 italic">
+                        ✘ Shopping Lists
+                    </li>
+                </ul>
+                <button class="w-full py-4 rounded-2xl border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">
+                    Start Free
+                </button>
+            </div>
+
+            <div class="relative group p-8 rounded-[2rem] bg-primary text-white shadow-2xl shadow-indigo-200 dark:shadow-none transform md:scale-110 z-10 border-4 border-white dark:border-gray-800">
+                <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
+                    Most Popular
+                </div>
+                
+                <h3 class="font-bold text-xl mb-2">Pro Plan</h3>
+                <p class="text-indigo-100 text-sm mb-6">Perfect for home renovators.</p>
+                
+                <div class="flex items-baseline gap-1 mb-8">
+                    <span class="text-5xl font-black" x-text="annual ? '$23' : '$29'">$29</span>
+                    <span class="text-indigo-200">/mo</span>
+                </div>
+                
+                <ul class="space-y-4 mb-10">
+                    <li class="flex items-center gap-3 text-sm">
+                        <span class="bg-white/20 p-1 rounded-full">✔</span> Unlimited Renders
+                    </li>
+                    <li class="flex items-center gap-3 text-sm">
+                        <span class="bg-white/20 p-1 rounded-full">✔</span> HD Exports (4K)
+                    </li>
+                    <li class="flex items-center gap-3 text-sm">
+                        <span class="bg-white/20 p-1 rounded-full">✔</span> Smart Shopping List
+                    </li>
+                    <li class="flex items-center gap-3 text-sm">
+                        <span class="bg-white/20 p-1 rounded-full">✔</span> 3D Virtual Walkthrough
+                    </li>
+                </ul>
+                
+                <button class="w-full py-4 rounded-2xl bg-white text-primary font-bold hover:scale-105 transition-transform shadow-lg">
+                    Get Started Now
+                </button>
+            </div>
+
+            <div class="group p-8 rounded-3xl bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 hover:border-primary transition-all duration-300 hover:shadow-2xl">
+                <h3 class="font-bold text-xl mb-2">Designer</h3>
+                <p class="text-sm text-gray-500 mb-6">For professional scaling.</p>
+                <div class="flex items-baseline gap-1 mb-8">
+                    <span class="text-4xl font-black" x-text="annual ? '$79' : '$99'">$99</span>
+                    <span class="text-gray-500">/mo</span>
+                </div>
+                <ul class="space-y-4 mb-10">
+                    <li class="flex items-center gap-3 text-sm">
+                        <span class="text-primary">✔</span> Everything in Pro
+                    </li>
+                    <li class="flex items-center gap-3 text-sm">
+                        <span class="text-primary">✔</span> White-label Reports
+                    </li>
+                    <li class="flex items-center gap-3 text-sm">
+                        <span class="text-primary">✔</span> Client Management
+                    </li>
+                </ul>
+                <button class="w-full py-4 rounded-2xl border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">
+                    Contact Sales
+                </button>
+            </div>
+
+        </div>
+    </div>
+</section>
+<section class="py-24 bg-white dark:bg-gray-900 overflow-hidden" x-data="{ 
+    activeTab: 1,
+    showBefore: false 
+}">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-black mb-4">Loved by Homeowners</h2>
+            <p class="text-gray-500 dark:text-gray-400">Real stories from people who transformed their living with Vexa.</p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            
+            <div class="relative">
+                <div class="absolute -top-10 -left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+                
+                <div class="relative group aspect-square md:aspect-video lg:aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white dark:border-gray-800">
+                    <template x-if="activeTab === 1">
+                        <img :src="showBefore ? 'assets/indexloveimg1' : 'assets/indexloveimg2'" 
+                             class="w-full h-full object-cover transition-all duration-500 scale-105 group-hover:scale-100">
+                    </template>
+                    <template x-if="activeTab === 2">
+                        <img :src="showBefore ? 'assets/indexloveimg1' : 'assets/indexloveimg3'" 
+                             class="w-full h-full object-cover transition-all duration-500 scale-105 group-hover:scale-100">
+                    </template>
+
+                    <button 
+                        @mousedown="showBefore = true" 
+                        @mouseup="showBefore = false"
+                        @touchstart="showBefore = true"
+                        @touchend="showBefore = false"
+                        class="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md px-6 py-3 rounded-full shadow-xl flex items-center gap-3 font-bold text-sm select-none active:scale-95 transition-transform"
+                    >
+                        <span x-text="showBefore ? 'Release for After' : 'Hold to see Before'"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <div 
+                    @click="activeTab = 1" 
+                    class="p-8 rounded-3xl cursor-pointer transition-all duration-300 border-2"
+                    :class="activeTab === 1 ? 'bg-primary/5 border-primary shadow-lg' : 'bg-transparent border-transparent hover:bg-gray-50 dark:hover:bg-gray-800/50'"
+                >
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="assets/indext1" class="w-12 h-12 rounded-full border-2 border-primary">
+                        <div>
+                            <h4 class="font-bold">Sarah Jenkins</h4>
+                            <p class="text-xs text-gray-500">Living Room Redesign • Budget $2,000</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 italic leading-relaxed">
+                        "I couldn't visualize how to fix my awkward living room. Vexa's AI gave me three options in minutes, and the shopping list saved me $400 on the sofa!"
+                    </p>
+                </div>
+
+                <div 
+                    @click="activeTab = 2" 
+                    class="p-8 rounded-3xl cursor-pointer transition-all duration-300 border-2"
+                    :class="activeTab === 2 ? 'bg-primary/5 border-primary shadow-lg' : 'bg-transparent border-transparent hover:bg-gray-50 dark:hover:bg-gray-800/50'"
+                >
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="assets/indext2" class="w-12 h-12 rounded-full border-2 border-primary">
+                        <div>
+                            <h4 class="font-bold">David Chen</h4>
+                            <p class="text-xs text-gray-500">Home Office • Budget $800</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 italic leading-relaxed">
+                        "Professional designers were out of my budget. This tool allowed me to do it myself while still getting that 'pro' look. Highly recommended."
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+ <section class="relative py-24 overflow-hidden" x-data="{ hover: false }">
+    <div class="absolute inset-0 bg-primary transition-colors duration-700" :class="hover ? 'bg-indigo-800' : 'bg-primary'"></div>
+    
+    <div class="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-indigo-400/20 rounded-full translate-x-1/3 translate-y-1/3 blur-3xl"></div>
+
+    <div class="relative max-w-5xl mx-auto px-4 text-center text-white" @mouseenter="hover = true" @mouseleave="hover = false">
+        <div class="inline-flex items-center justify-center w-20 h-20 bg-white/10 backdrop-blur-xl rounded-3xl mb-8 animate-bounce shadow-2xl border border-white/20">
+            <span class="text-4xl">🏠</span>
+        </div>
+
+        <h2 class="text-4xl md:text-6xl font-black mb-6 leading-tight">
+            Ready to See Your Room <br class="hidden md:block"> In a New Light?
+        </h2>
+        
+        <p class="text-lg md:text-xl text-indigo-100 mb-12 max-w-2xl mx-auto">
+            Join over 10,000+ happy homeowners. No credit card required to start your first design.
+        </p>
+
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+           <a href="pricing.html">
+  <button class="group relative px-10 py-5 bg-white text-primary rounded-2xl font-black text-xl shadow-2xl shadow-black/20 hover:scale-105 active:scale-95 transition-all duration-300 w-full sm:w-auto overflow-hidden">
+                <span class="relative z-10">Start Free Trial</span>
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+            </button>
+           </a>
+          
+<a href="book.html">
+<button class="px-10 py-5 bg-indigo-700/50 backdrop-blur-md text-white rounded-2xl font-bold text-lg border border-indigo-400/50 hover:bg-indigo-700 hover:border-white transition-all w-full sm:w-auto">
+                Book a Demo
+            </button>
+</a>
+            
+        </div>
+
+        <div class="mt-12 flex flex-wrap justify-center items-center gap-8 text-sm font-medium text-indigo-200">
+            <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                No Credit Card Required
+            </div>
+            <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                Instant AI Generation
+            </div>
+            <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"></path></svg>
+                Cancel Anytime
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="bg-white dark:bg-gray-950 pt-20 pb-10 border-t dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+            
+            <div class="space-y-6">
+                <a href="index.html">
+ <div class="flex items-center gap-2">
+                   <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200/50 dark:shadow-none transition-transform hover:rotate-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        </svg>
+    </div>
+                    <span class="font-bold text-2xl tracking-tight dark:text-white">VexaDesign</span>
+                </div>
+                </a>
+               
+                <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                    Transforming homes through the power of Artificial Intelligence. Professional design, accessible to everyone.
+                </p>
+                <div class="flex flex-wrap gap-4">
+    <a href="#" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-primary hover:text-white transition-all duration-300 shadow-sm">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+    </a>
+
+    <a href="#" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-primary hover:text-white transition-all duration-300 shadow-sm">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+
+    <a href="#" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-primary hover:text-white transition-all duration-300 shadow-sm">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+    </a>
+
+    <a href="#" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-primary hover:text-white transition-all duration-300 shadow-sm">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+    </a>
+
+    <a href="#" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-primary hover:text-white transition-all duration-300 shadow-sm">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+    </a>
+</div>
+            </div>
+
+            <div>
+                <h4 class="font-bold mb-6 dark:text-white">Platform</h4>
+                <ul class="space-y-4 text-sm text-gray-500 dark:text-gray-400">
+                    <li><a href="index.html" class="hover:text-primary transition-colors">Home1</a></li>
+                    <li><a href="home2.html" class="hover:text-primary transition-colors">Home2</a></li>
+                    <li><a href="features.html" class="hover:text-primary transition-colors">Features</a></li>
+                    <li><a href="pricing.html" class="hover:text-primary transition-colors">Pricing</a></li>
+                    <li><a href="login.html" class="text-primary font-bold">Sign Up / Free Trial</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold mb-6 dark:text-white">Resources</h4>
+                <ul class="space-y-4 text-sm text-gray-500 dark:text-gray-400">
+                    <li><a href="about.html" class="hover:text-primary transition-colors">About Us</a></li>
+                    <li><a href="contact.html" class="hover:text-primary transition-colors">Contact Support</a></li>
+                    <li><a href="comingsoon.html" class="hover:text-primary transition-colors">Coming Soon <span class="text-[10px] bg-indigo-100 text-primary px-2 py-0.5 rounded-full ml-1 uppercase">New</span></a></li>
+                    <li><a href="404.html" class="hover:text-primary transition-colors">404 Page</a></li>
+                    <li><a href="contact.html" class="hover:text-primary transition-colors">Contact Us</a></li>
+                    <li><a href="book.html" class="hover:text-primary transition-colors">Book a Demo</a></li>
+                </ul>
+            </div>
+
+            <div x-data="{ subscribed: false }">
+                <h4 class="font-bold mb-6 dark:text-white">Stay Updated</h4>
+                <p class="text-sm text-gray-500 mb-6">Get design tips and AI updates delivered to your inbox.</p>
+                
+                <form @submit.prevent="subscribed = true" x-show="!subscribed" class="flex flex-col gap-2">
+                    <input type="email" placeholder="Enter your email" required class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary focus:outline-none transition-all text-sm">
+                    <button type="submit" class="w-full bg-primary text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition-colors">Subscribe</button>
+                </form>
+
+                <div x-show="subscribed" x-cloak class="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl text-center">
+                    <p class="text-green-600 dark:text-green-400 text-sm font-bold">🎉 Welcome to the community!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-8 border-t dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-xs text-gray-400">© 2026 VexaDesign AI. All rights reserved.</p>
+            <div class="flex gap-6 text-xs text-gray-400">
+                <a href="#" class="hover:text-primary">Privacy Policy</a>
+                <a href="#" class="hover:text-primary">Terms of Service</a>
+                <a href="#" class="hover:text-primary">Cookie Policy</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
