@@ -67,8 +67,8 @@
 <div class="hidden lg:flex items-center space-x-1">
     <template x-for="link in [
         {id: 'index', label: 'Home'},
-        {id: 'home2', label: 'Home 2'},
-        {id: 'about', label: 'About Us'},
+        {id: 'home2', label: 'Home2'},
+        {id: 'about', label: 'About'},
         {id: 'features', label: 'Features'},
         {id: 'pricing', label: 'Pricing'},
         {id: 'contact', label: 'Contact'}
@@ -101,7 +101,7 @@
                     </button>
                 </div>
 
-                <a href="login.html" class="hidden md:flex px-5 py-2.5 bg-primary text-white text-sm font-bold rounded-xl shadow-lg shadow-indigo-200 dark:shadow-none hover:bg-indigo-700 transition-all">
+                <a href="regeister.html" class="hidden md:flex px-5 py-2.5 bg-primary text-white text-sm font-bold rounded-xl shadow-lg shadow-indigo-200 dark:shadow-none hover:bg-indigo-700 transition-all">
                     Register
                 </a>
 
@@ -148,7 +148,7 @@
         <template x-for="link in [
             {id: 'index', label: 'Home'},
             {id: 'home2', label: 'Home2'},
-            {id: 'about', label: 'About Us'},
+            {id: 'about', label: 'About'},
             {id: 'features', label: 'Features'},
             {id: 'pricing', label: 'Pricing'},
             {id: 'contact', label: 'Contact'}
@@ -230,8 +230,13 @@
 <section class="py-24 bg-zinc-50 dark:bg-zinc-900/50">
     <div class="max-w-7xl mx-auto px-6">
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
             <div class="p-10 bg-white dark:bg-zinc-800 rounded-[3rem] shadow-sm hover:shadow-xl transition-all border border-transparent hover:border-primary/20 group">
-                <div class="w-16 h-16 bg-zinc-50 dark:bg-zinc-900 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition-transform">📐</div>
+                <div class="w-full h-48 mb-8 overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-900">
+                    <img src="assets/feuimg2" 
+                         alt="Floor Plan" 
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                </div>
                 <h4 class="text-2xl font-black mb-4 dark:text-white">Precision Floor Plans</h4>
                 <p class="text-sm text-zinc-500 leading-relaxed mb-6">Send us your room dimensions and we'll create the perfect layout for flow and function.</p>
                 <ul class="space-y-2 text-xs font-bold text-zinc-400">
@@ -241,7 +246,11 @@
             </div>
 
             <div class="p-10 bg-white dark:bg-zinc-800 rounded-[3rem] shadow-sm hover:shadow-xl transition-all border border-transparent hover:border-primary/20 group">
-                <div class="w-16 h-16 bg-zinc-50 dark:bg-zinc-900 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition-transform">🕶️</div>
+                <div class="w-full h-48 mb-8 overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-900">
+                    <img src="assets/feuimg1" 
+                         alt="3D Render" 
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                </div>
                 <h4 class="text-2xl font-black mb-4 dark:text-white">3D Photorealistic Renders</h4>
                 <p class="text-sm text-zinc-500 leading-relaxed mb-6">See exactly what your space will look like with hyper-realistic 3D images before buying anything.</p>
                 <ul class="space-y-2 text-xs font-bold text-zinc-400">
@@ -251,7 +260,11 @@
             </div>
 
             <div class="p-10 bg-white dark:bg-zinc-800 rounded-[3rem] shadow-sm hover:shadow-xl transition-all border border-transparent hover:border-primary/20 group">
-                <div class="w-16 h-16 bg-zinc-50 dark:bg-zinc-900 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition-transform">🛒</div>
+                <div class="w-full h-48 mb-8 overflow-hidden rounded-2xl bg-zinc-100 dark:bg-zinc-900">
+                    <img src="assets/feuimg3" 
+                         alt="Furniture Moodboard" 
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                </div>
                 <h4 class="text-2xl font-black mb-4 dark:text-white">Shoppable Moodboards</h4>
                 <p class="text-sm text-zinc-500 leading-relaxed mb-6">A curated list of furniture and decor tailored to your budget with direct links to purchase.</p>
                 <ul class="space-y-2 text-xs font-bold text-zinc-400">
@@ -259,6 +272,7 @@
                     <li>✅ Designer Discounts</li>
                 </ul>
             </div>
+
         </div>
     </div>
 </section>
