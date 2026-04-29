@@ -62,7 +62,7 @@
             
             <div class="hidden lg:flex relative bg-primary p-10 overflow-hidden flex-col justify-between">
                 <div class="absolute inset-0 bg-gradient-to-br from-primary to-indigo-900 opacity-90"></div>
-                <img src="https://images.unsplash.com/photo-1616489953149-80795410a48b?q=80&w=2000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay">
+                <!-- <img src="https://images.unsplash.com/photo-1616489953149-80795410a48b?q=80&w=2000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay"> -->
                 
                 <div class="relative z-10">
                     <h2 class="text-4xl font-black leading-tight text-white">Your Design Journey <br>Starts Right Here.</h2>
@@ -117,10 +117,24 @@
 
                         <div class="space-y-1">
                             <label class="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 px-1">Password</label>
-                            <div class="relative group">
-                                <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs transition-colors"></i>
-                                <input type="password" required placeholder="Min. 8 chars" class="w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary focus:bg-white dark:focus:bg-gray-900 focus:outline-none dark:text-white transition-all text-xs sm:text-sm">
-                            </div>
+                            <div class="relative" x-data="{ show: false }">
+    <i class="fas fa-lock absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+    
+    <input 
+        :type="show ? 'text' : 'password'" 
+        required 
+        placeholder="••••••••" 
+        class="w-full pl-11 sm:pl-12 pr-12 sm:pr-14 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl bg-gray-50 dark:bg-gray-800 border-2 border-transparent focus:border-primary focus:bg-white dark:focus:bg-gray-900 focus:outline-none dark:text-white transition-all text-sm"
+    >
+
+    <button 
+        type="button" 
+        @click="show = !show" 
+        class="absolute right-4 sm:right-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors focus:outline-none"
+    >
+        <i class="fas" :class="show ? 'fa-eye-slash' : 'fa-eye'"></i>
+    </button>
+</div>
                         </div>
 
                         <div class="flex items-start gap-2.5 px-1 py-0.5">
